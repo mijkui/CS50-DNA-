@@ -1,0 +1,225 @@
+{% extends "base.html" %}
+
+{% block title %}Analysis Results - DNA Analysis System{% endblock %}
+
+{% block content %}
+<div class="main-container">
+    <div class="row mb-4">
+        <div class="col-12">
+            <h2 class="mb-3">
+                <i class="fas fa-chart-bar me-2"></i>DNA Analysis Results
+            </h2>
+            <p class="text-muted">Analysis completed successfully. Here are your results:</p>
+        </div>
+    </div>
+
+    <div class="row mb-4">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <i class="fas fa-dna me-2"></i>Input DNA Sequence
+                    </h5>
+                    <div class="dna-sequence">
+                        <code>{{ dna_sequence[:100] }}{% if dna_sequence|length > 100 %}...{% endif %}</code>
+                    </div>
+                    <small class="text-muted">{{ dna_sequence|length }} characters</small>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <i class="fas fa-chart-pie me-2"></i>STR Analysis Summary
+                    </h5>
+                    <div class="row">
+                        {% for str_name, count in str_count.items() %}
+                        <div class="col-md-6 mb-2">
+                            <div class="d-flex justify-content-between">
+                                <span><code>{{ str_name }}</code></span>
+                                <span class="badge bg-primary">{{ count }}</span>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <i class="fas fa-search me-2"></i>Database Matches
+                    </h5>
+                    
+                    {% if matches %}
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Rank</th>
+                                        <th>Name</th>
+                                        <th>Confidence Score</th>
+                                        <th>Match Score</th>
+                                        <th>STR Counts</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for match in matches %}
+                                    <tr>
+                                        <td>
+                                            <span class="badge bg-{% if loop.index == 1 %}success{% elif loop.index == 2 %}warning{% else %}secondary{% endif %}">
+                                                #{{ loop.index }}
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <strong>{{ match.name }}</strong>
+                                            {% if loop.index == 1 and match.confidence > 80 %}
+                                                <i class="fas fa-star text-warning ms-2" title="High confidence match"></i>
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            <div class="confidence-bar">
+                                                <div class="confidence-fill" style="width: {{ match.confidence }}%"></div>
+                                            </div>
+                                            <small>{{ "%.1f"|format(match.confidence) }}%</small>
+                                        </td>
+                                        <td>
+                                            <span class="badge bg-info">{{ match.match_score }}/8</span>
+                                        </td>
+                                        <td>
+                                            <button class="btn btn-sm btn-outline-secondary" 
+                                                    onclick="showSTRDetails('{{ match.name }}', {{ match.str_counts|tojson }})">
+                                                <i class="fas fa-eye"></i> View
+                                            </button>
+                                        </td>
+                                        <td>
+                                            <button class="btn btn-sm btn-primary" onclick="compareWith('{{ match.name }}')">
+                                                <i class="fas fa-balance-scale"></i> Compare
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                        {% if matches[0].confidence > 80 %}
+                            <div class="alert alert-success">
+                                <i class="fas fa-check-circle me-2"></i>
+                                <strong>High confidence match found!</strong> The top result has a {{ "%.1f"|format(matches[0].confidence) }}% confidence score.
+                            </div>
+                        {% elif matches[0].confidence > 50 %}
+                            <div class="alert alert-warning">
+                                <i class="fas fa-exclamation-triangle me-2"></i>
+                                <strong>Partial match found.</strong> The best match has a {{ "%.1f"|format(matches[0].confidence) }}% confidence score. Consider additional analysis.
+                            </div>
+                        {% else %}
+                            <div class="alert alert-info">
+                                <i class="fas fa-info-circle me-2"></i>
+                                <strong>Low confidence matches.</strong> The best match has a {{ "%.1f"|format(matches[0].confidence) }}% confidence score. No exact matches found.
+                            </div>
+                        {% endif %}
+                    {% else %}
+                        <div class="text-center py-4">
+                            <i class="fas fa-search fa-3x text-muted mb-3"></i>
+                            <h5>No matches found</h5>
+                            <p class="text-muted">The DNA sequence doesn't match any profiles in our database.</p>
+                            <a href="{{ url_for('add_person') }}" class="btn btn-primary">
+                                <i class="fas fa-user-plus me-2"></i>Add New Profile
+                            </a>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <i class="fas fa-chart-line me-2"></i>Next Steps
+                    </h5>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="text-center">
+                                <i class="fas fa-upload fa-2x text-primary mb-2"></i>
+                                <h6>Upload Another File</h6>
+                                <p class="text-muted">Analyze a different DNA sequence</p>
+                                <a href="{{ url_for('upload') }}" class="btn btn-outline-primary btn-sm">Upload</a>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="text-center">
+                                <i class="fas fa-user-plus fa-2x text-success mb-2"></i>
+                                <h6>Add New Profile</h6>
+                                <p class="text-muted">Expand the database</p>
+                                <a href="{{ url_for('add_person') }}" class="btn btn-outline-success btn-sm">Add Person</a>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="text-center">
+                                <i class="fas fa-brain fa-2x text-warning mb-2"></i>
+                                <h6>Advanced Analysis</h6>
+                                <p class="text-muted">Deep genetic analysis</p>
+                                <a href="{{ url_for('advanced_analysis') }}" class="btn btn-outline-warning btn-sm">Analyze</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- STR Details Modal -->
+<div class="modal fade" id="strModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">STR Details for <span id="modalName"></span></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div id="strDetails"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function showSTRDetails(name, strCounts) {
+    document.getElementById('modalName').textContent = name;
+    const detailsDiv = document.getElementById('strDetails');
+    
+    let html = '<div class="row">';
+    for (const [str, count] of Object.entries(strCounts)) {
+        html += `
+            <div class="col-md-6 mb-2">
+                <div class="d-flex justify-content-between align-items-center">
+                    <code>${str}</code>
+                    <span class="badge bg-primary">${count}</span>
+                </div>
+            </div>
+        `;
+    }
+    html += '</div>';
+    
+    detailsDiv.innerHTML = html;
+    new bootstrap.Modal(document.getElementById('strModal')).show();
+}
+
+function compareWith(name) {
+    // This would typically open a comparison view
+    alert('Compare with ' + name + ' - Feature coming soon!');
+}
+</script>
+{% endblock %} 

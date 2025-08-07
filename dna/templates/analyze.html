@@ -1,0 +1,126 @@
+{% extends "base.html" %}
+
+{% block title %}Analyze DNA - DNA Analysis System{% endblock %}
+
+{% block content %}
+<div class="main-container">
+    <div class="row mb-4">
+        <div class="col-12">
+            <h2 class="mb-3">
+                <i class="fas fa-dna me-2"></i>DNA Sequence Analysis
+            </h2>
+            <p class="text-muted">Enter a DNA sequence to analyze and find potential matches in our database.</p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <i class="fas fa-search me-2"></i>Analyze DNA Sequence
+                    </h5>
+                    
+                    <form method="POST">
+                        <div class="mb-3">
+                            <label for="dna_sequence" class="form-label">
+                                <i class="fas fa-dna me-2"></i>DNA Sequence
+                            </label>
+                            <textarea class="form-control" id="dna_sequence" name="dna_sequence" rows="8" 
+                                      placeholder="Enter your DNA sequence here (e.g., AAGGTAAGTTTAGAATATAAAAGGTGAGTTAAATAGAATAGGTTAAAATTAAAGGAGATCAGATCAGATCAGATCTATCTATCTATCTATCTATCAGAAAAGAGTAAATAGTTAAAGAGTAAGATATTGAATTAATGGAAAATATTGTTGGGGAAAGGAGGGATAGAAGG)" required></textarea>
+                            <div class="form-text">
+                                <i class="fas fa-info-circle me-1"></i>
+                                Enter a DNA sequence containing only A, T, G, and C nucleotides.
+                            </div>
+                        </div>
+                        
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary btn-lg">
+                                <i class="fas fa-search me-2"></i>Analyze Sequence
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <i class="fas fa-info-circle me-2"></i>Analysis Information
+                    </h5>
+                    
+                    <div class="mb-3">
+                        <h6><i class="fas fa-dna me-2"></i>STR Markers Analyzed</h6>
+                        <ul class="list-unstyled">
+                            <li><code>AGATC</code> - Short Tandem Repeat 1</li>
+                            <li><code>TTTTTTCT</code> - Short Tandem Repeat 2</li>
+                            <li><code>AATG</code> - Short Tandem Repeat 3</li>
+                            <li><code>TCTAG</code> - Short Tandem Repeat 4</li>
+                            <li><code>GATA</code> - Short Tandem Repeat 5</li>
+                            <li><code>TATC</code> - Short Tandem Repeat 6</li>
+                            <li><code>GAAA</code> - Short Tandem Repeat 7</li>
+                            <li><code>TCTG</code> - Short Tandem Repeat 8</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <h6><i class="fas fa-chart-bar me-2"></i>What We Analyze</h6>
+                        <ul class="list-unstyled">
+                            <li><i class="fas fa-check text-success me-2"></i>Longest consecutive repeats</li>
+                            <li><i class="fas fa-check text-success me-2"></i>Pattern matching</li>
+                            <li><i class="fas fa-check text-success me-2"></i>Confidence scoring</li>
+                            <li><i class="fas fa-check text-success me-2"></i>Multiple potential matches</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="alert alert-info">
+                        <i class="fas fa-lightbulb me-2"></i>
+                        <strong>Tip:</strong> For best results, ensure your DNA sequence is complete and contains all STR markers.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <i class="fas fa-upload me-2"></i>Alternative: Upload DNA File
+                    </h5>
+                    <p class="card-text">Prefer to upload a file instead? Use our file upload feature for convenience.</p>
+                    <a href="{{ url_for('upload') }}" class="btn btn-outline-primary">
+                        <i class="fas fa-upload me-2"></i>Upload DNA File
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+// Auto-resize textarea
+document.getElementById('dna_sequence').addEventListener('input', function() {
+    this.style.height = 'auto';
+    this.style.height = this.scrollHeight + 'px';
+});
+
+// Character counter
+document.getElementById('dna_sequence').addEventListener('input', function() {
+    const count = this.value.length;
+    const counter = document.getElementById('char-count') || createCounter();
+    counter.textContent = `${count} characters`;
+});
+
+function createCounter() {
+    const counter = document.createElement('div');
+    counter.id = 'char-count';
+    counter.className = 'form-text text-muted';
+    document.getElementById('dna_sequence').parentNode.appendChild(counter);
+    return counter;
+}
+</script>
+{% endblock %} 

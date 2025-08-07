@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+
+{% block title %}DNA Analysis System - Home{% endblock %}
+
+{% block content %}
+<div class="main-container">
+    <div class="dna-hero text-center">
+        <h1 class="display-4 fw-bold mb-4">
+            <i class="fas fa-dna me-3"></i>DNA Analysis System
+        </h1>
+        <p class="lead mb-4">Analyze DNA sequences and find matches in our database</p>
+        <div class="d-flex justify-content-center gap-3">
+            <a href="{{ url_for('analyze') }}" class="btn btn-light btn-lg">
+                <i class="fas fa-search me-2"></i>Analyze DNA
+            </a>
+            <a href="{{ url_for('upload') }}" class="btn btn-outline-light btn-lg">
+                <i class="fas fa-upload me-2"></i>Upload File
+            </a>
+        </div>
+    </div>
+
+    <div class="row mb-5">
+        <div class="col-md-4">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-search"></i>
+                </div>
+                <h4>DNA Matching</h4>
+                <p>Identify individuals by matching DNA sequences against our comprehensive database using advanced STR analysis.</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <h4>Advanced Analysis</h4>
+                <p>Perform genetic distance calculations, mutation detection, and haplotype analysis for deeper insights.</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-brain"></i>
+                </div>
+                <h4>Machine Learning</h4>
+                <p>Leverage AI-powered algorithms for predictive modeling and pattern recognition in genetic data.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mb-5">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <i class="fas fa-upload me-2"></i>Upload & Analyze
+                    </h5>
+                    <p class="card-text">Upload DNA sequence files and get instant analysis results with confidence scores and multiple potential matches.</p>
+                    <a href="{{ url_for('upload') }}" class="btn btn-primary">Upload File</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <i class="fas fa-user-plus me-2"></i>Add New Profiles
+                    </h5>
+                    <p class="card-text">Manually add new individuals to the database with their STR counts for expanded matching capabilities.</p>
+                    <a href="{{ url_for('add_person') }}" class="btn btn-primary">Add Person</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-3">
+            <div class="stats-card">
+                <div class="stats-number">8</div>
+                <div>STR Markers</div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="stats-card">
+                <div class="stats-number">24</div>
+                <div>Profiles</div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="stats-card">
+                <div class="stats-number">99%</div>
+                <div>Accuracy</div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="stats-card">
+                <div class="stats-number">24/7</div>
+                <div>Available</div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

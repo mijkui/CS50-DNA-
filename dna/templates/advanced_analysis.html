@@ -1,0 +1,280 @@
+{% extends "base.html" %}
+
+{% block title %}Advanced Analysis - DNA Analysis System{% endblock %}
+
+{% block content %}
+<div class="main-container">
+    <div class="row mb-4">
+        <div class="col-12">
+            <h2 class="mb-3">
+                <i class="fas fa-brain me-2"></i>Advanced DNA Analysis
+            </h2>
+            <p class="text-muted">Perform advanced genetic analysis including distance calculations, mutation detection, and haplotype analysis.</p>
+        </div>
+    </div>
+
+    <!-- Genetic Distance Calculator -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <i class="fas fa-ruler me-2"></i>Genetic Distance Calculator
+                    </h5>
+                    <p class="text-muted">Calculate the genetic distance between two DNA sequences to determine how closely related they are.</p>
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="sequence1" class="form-label">Reference Sequence</label>
+                                <textarea class="form-control" id="sequence1" rows="4" 
+                                          placeholder="Enter the first DNA sequence..."></textarea>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="sequence2" class="form-label">Test Sequence</label>
+                                <textarea class="form-control" id="sequence2" rows="4" 
+                                          placeholder="Enter the second DNA sequence..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button class="btn btn-primary" onclick="calculateDistance()">
+                        <i class="fas fa-calculator me-2"></i>Calculate Distance
+                    </button>
+                    
+                    <div id="distanceResult" class="mt-3" style="display: none;">
+                        <div class="alert alert-info">
+                            <h6>Genetic Distance Result:</h6>
+                            <div id="distanceValue"></div>
+                            <small class="text-muted">Distance is measured as the proportion of different nucleotides between sequences.</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mutation Detection -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <i class="fas fa-exclamation-triangle me-2"></i>Mutation Detection
+                    </h5>
+                    <p class="text-muted">Compare two sequences to identify mutations and variations.</p>
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="referenceSeq" class="form-label">Reference Sequence</label>
+                                <textarea class="form-control" id="referenceSeq" rows="4" 
+                                          placeholder="Enter the reference DNA sequence..."></textarea>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="testSeq" class="form-label">Test Sequence</label>
+                                <textarea class="form-control" id="testSeq" rows="4" 
+                                          placeholder="Enter the test DNA sequence..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button class="btn btn-warning" onclick="detectMutations()">
+                        <i class="fas fa-search me-2"></i>Detect Mutations
+                    </button>
+                    
+                    <div id="mutationResult" class="mt-3" style="display: none;">
+                        <div class="alert alert-warning">
+                            <h6>Mutation Analysis Results:</h6>
+                            <div id="mutationList"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Haplotype Analysis -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <i class="fas fa-sitemap me-2"></i>Haplotype Analysis
+                    </h5>
+                    <p class="text-muted">Group individuals by their genetic markers to identify haplotype patterns.</p>
+                    
+                    <button class="btn btn-success" onclick="analyzeHaplotypes()">
+                        <i class="fas fa-chart-pie me-2"></i>Analyze Haplotypes
+                    </button>
+                    
+                    <div id="haplotypeResult" class="mt-3" style="display: none;">
+                        <div class="alert alert-success">
+                            <h6>Haplotype Analysis Results:</h6>
+                            <div id="haplotypeGroups"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Machine Learning Integration -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <i class="fas fa-robot me-2"></i>Machine Learning Analysis
+                    </h5>
+                    <p class="text-muted">Advanced AI-powered analysis for pattern recognition and predictive modeling.</p>
+                    
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="text-center">
+                                <i class="fas fa-chart-line fa-2x text-primary mb-2"></i>
+                                <h6>Pattern Recognition</h6>
+                                <p class="text-muted">Identify complex genetic patterns</p>
+                                <button class="btn btn-outline-primary btn-sm" onclick="mlPatternRecognition()">
+                                    Analyze Patterns
+                                </button>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="text-center">
+                                <i class="fas fa-crystal-ball fa-2x text-success mb-2"></i>
+                                <h6>Predictive Modeling</h6>
+                                <p class="text-muted">Predict genetic traits</p>
+                                <button class="btn btn-outline-success btn-sm" onclick="mlPrediction()">
+                                    Make Predictions
+                                </button>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="text-center">
+                                <i class="fas fa-network-wired fa-2x text-warning mb-2"></i>
+                                <h6>Clustering Analysis</h6>
+                                <p class="text-muted">Group similar profiles</p>
+                                <button class="btn btn-outline-warning btn-sm" onclick="mlClustering()">
+                                    Cluster Profiles
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function calculateDistance() {
+    const seq1 = document.getElementById('sequence1').value.trim();
+    const seq2 = document.getElementById('sequence2').value.trim();
+    
+    if (!seq1 || !seq2) {
+        alert('Please enter both sequences');
+        return;
+    }
+    
+    if (seq1.length !== seq2.length) {
+        alert('Sequences must be the same length for distance calculation');
+        return;
+    }
+    
+    // Calculate genetic distance
+    let differences = 0;
+    for (let i = 0; i < seq1.length; i++) {
+        if (seq1[i] !== seq2[i]) {
+            differences++;
+        }
+    }
+    
+    const distance = differences / seq1.length;
+    const similarity = (1 - distance) * 100;
+    
+    document.getElementById('distanceValue').innerHTML = `
+        <strong>Genetic Distance:</strong> ${distance.toFixed(4)}<br>
+        <strong>Similarity:</strong> ${similarity.toFixed(2)}%<br>
+        <strong>Differences:</strong> ${differences} out of ${seq1.length} positions
+    `;
+    document.getElementById('distanceResult').style.display = 'block';
+}
+
+function detectMutations() {
+    const reference = document.getElementById('referenceSeq').value.trim();
+    const test = document.getElementById('testSeq').value.trim();
+    
+    if (!reference || !test) {
+        alert('Please enter both sequences');
+        return;
+    }
+    
+    const minLength = Math.min(reference.length, test.length);
+    const mutations = [];
+    
+    for (let i = 0; i < minLength; i++) {
+        if (reference[i] !== test[i]) {
+            mutations.push({
+                position: i + 1,
+                reference: reference[i],
+                mutated: test[i],
+                type: 'substitution'
+            });
+        }
+    }
+    
+    let resultHtml = '';
+    if (mutations.length === 0) {
+        resultHtml = '<p class="text-success">No mutations detected!</p>';
+    } else {
+        resultHtml = `<p><strong>Found ${mutations.length} mutation(s):</strong></p>`;
+        resultHtml += '<ul>';
+        mutations.forEach(mutation => {
+            resultHtml += `<li>Position ${mutation.position}: ${mutation.reference} → ${mutation.mutated}</li>`;
+        });
+        resultHtml += '</ul>';
+    }
+    
+    document.getElementById('mutationList').innerHTML = resultHtml;
+    document.getElementById('mutationResult').style.display = 'block';
+}
+
+function analyzeHaplotypes() {
+    fetch('/api/haplotypes')
+        .then(response => response.json())
+        .then(data => {
+            let resultHtml = '<p><strong>Haplotype Groups:</strong></p>';
+            let groupCount = 0;
+            
+            for (const [haplotype, people] of Object.entries(data)) {
+                groupCount++;
+                resultHtml += `<p><strong>Group ${groupCount}:</strong> ${people.join(', ')}</p>`;
+            }
+            
+            document.getElementById('haplotypeGroups').innerHTML = resultHtml;
+            document.getElementById('haplotypeResult').style.display = 'block';
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Error analyzing haplotypes');
+        });
+}
+
+function mlPatternRecognition() {
+    alert('Machine Learning Pattern Recognition - Feature coming soon!');
+}
+
+function mlPrediction() {
+    alert('Machine Learning Predictive Modeling - Feature coming soon!');
+}
+
+function mlClustering() {
+    alert('Machine Learning Clustering Analysis - Feature coming soon!');
+}
+</script>
+{% endblock %} 

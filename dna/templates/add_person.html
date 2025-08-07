@@ -1,0 +1,232 @@
+{% extends "base.html" %}
+
+{% block title %}Add Person - DNA Analysis System{% endblock %}
+
+{% block content %}
+<div class="main-container">
+    <div class="row mb-4">
+        <div class="col-12">
+            <h2 class="mb-3">
+                <i class="fas fa-user-plus me-2"></i>Add New Person to Database
+            </h2>
+            <p class="text-muted">Manually add a new individual to the DNA database with their STR counts.</p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <i class="fas fa-user-plus me-2"></i>Person Information
+                    </h5>
+                    
+                    <form method="POST">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="name" class="form-label">
+                                        <i class="fas fa-user me-2"></i>Full Name
+                                    </label>
+                                    <input type="text" class="form-control" id="name" name="name" 
+                                           placeholder="e.g., Allan Smith" required>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <hr class="my-4">
+                        
+                        <h6 class="mb-3">
+                            <i class="fas fa-dna me-2"></i>STR Counts
+                        </h6>
+                        <p class="text-muted mb-4">Enter the count of consecutive repeats for each STR marker:</p>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="agatc" class="form-label">
+                                        <code>AGATC</code> Count
+                                    </label>
+                                    <input type="number" class="form-control" id="agatc" name="agatc" 
+                                           min="0" max="100" placeholder="e.g., 48" required>
+                                    <div class="form-text">Number of consecutive AGATC repeats</div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="ttttttct" class="form-label">
+                                        <code>TTTTTTCT</code> Count
+                                    </label>
+                                    <input type="number" class="form-control" id="ttttttct" name="ttttttct" 
+                                           min="0" max="100" placeholder="e.g., 23" required>
+                                    <div class="form-text">Number of consecutive TTTTTTCT repeats</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="aatg" class="form-label">
+                                        <code>AATG</code> Count
+                                    </label>
+                                    <input type="number" class="form-control" id="aatg" name="aatg" 
+                                           min="0" max="100" placeholder="e.g., 15" required>
+                                    <div class="form-text">Number of consecutive AATG repeats</div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="tctag" class="form-label">
+                                        <code>TCTAG</code> Count
+                                    </label>
+                                    <input type="number" class="form-control" id="tctag" name="tctag" 
+                                           min="0" max="100" placeholder="e.g., 8" required>
+                                    <div class="form-text">Number of consecutive TCTAG repeats</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="gata" class="form-label">
+                                        <code>GATA</code> Count
+                                    </label>
+                                    <input type="number" class="form-control" id="gata" name="gata" 
+                                           min="0" max="100" placeholder="e.g., 12" required>
+                                    <div class="form-text">Number of consecutive GATA repeats</div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="tatc" class="form-label">
+                                        <code>TATC</code> Count
+                                    </label>
+                                    <input type="number" class="form-control" id="tatc" name="tatc" 
+                                           min="0" max="100" placeholder="e.g., 5" required>
+                                    <div class="form-text">Number of consecutive TATC repeats</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="gaaa" class="form-label">
+                                        <code>GAAA</code> Count
+                                    </label>
+                                    <input type="number" class="form-control" id="gaaa" name="gaaa" 
+                                           min="0" max="100" placeholder="e.g., 28" required>
+                                    <div class="form-text">Number of consecutive GAAA repeats</div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="tctg" class="form-label">
+                                        <code>TCTG</code> Count
+                                    </label>
+                                    <input type="number" class="form-control" id="tctg" name="tctg" 
+                                           min="0" max="100" placeholder="e.g., 40" required>
+                                    <div class="form-text">Number of consecutive TCTG repeats</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <a href="{{ url_for('database') }}" class="btn btn-outline-secondary me-md-2">
+                                <i class="fas fa-times me-2"></i>Cancel
+                            </a>
+                            <button type="submit" class="btn btn-success">
+                                <i class="fas fa-save me-2"></i>Add Person
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <i class="fas fa-info-circle me-2"></i>Instructions
+                    </h5>
+                    
+                    <div class="mb-3">
+                        <h6><i class="fas fa-user me-2"></i>Person Details</h6>
+                        <ul class="list-unstyled">
+                            <li><i class="fas fa-check text-success me-2"></i>Enter the full name</li>
+                            <li><i class="fas fa-check text-success me-2"></i>Use proper capitalization</li>
+                            <li><i class="fas fa-check text-success me-2"></i>Names must be unique</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <h6><i class="fas fa-dna me-2"></i>STR Counts</h6>
+                        <ul class="list-unstyled">
+                            <li><i class="fas fa-check text-success me-2"></i>Count consecutive repeats</li>
+                            <li><i class="fas fa-check text-success me-2"></i>Use whole numbers only</li>
+                            <li><i class="fas fa-check text-success me-2"></i>Range: 0-100 per marker</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="alert alert-info">
+                        <i class="fas fa-lightbulb me-2"></i>
+                        <strong>Example:</strong> If you see "AGATCAGATCAGATC" in a sequence, that's 3 consecutive AGATC repeats.
+                    </div>
+                    
+                    <div class="alert alert-warning">
+                        <i class="fas fa-exclamation-triangle me-2"></i>
+                        <strong>Note:</strong> All fields are required. Double-check your STR counts for accuracy.
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card mt-3">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <i class="fas fa-database me-2"></i>Database Stats
+                    </h5>
+                    <div class="row text-center">
+                        <div class="col-6">
+                            <div class="stats-number text-primary">24</div>
+                            <small>Current Profiles</small>
+                        </div>
+                        <div class="col-6">
+                            <div class="stats-number text-success">8</div>
+                            <small>STR Markers</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+// Auto-fill example data for testing
+function fillExample() {
+    document.getElementById('name').value = 'Allan Smith';
+    document.getElementById('agatc').value = '48';
+    document.getElementById('ttttttct').value = '23';
+    document.getElementById('aatg').value = '15';
+    document.getElementById('tctag').value = '8';
+    document.getElementById('gata').value = '12';
+    document.getElementById('tatc').value = '5';
+    document.getElementById('gaaa').value = '28';
+    document.getElementById('tctg').value = '40';
+}
+
+// Add a button for testing (remove in production)
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.querySelector('form');
+    const testButton = document.createElement('button');
+    testButton.type = 'button';
+    testButton.className = 'btn btn-outline-info btn-sm';
+    testButton.innerHTML = '<i class="fas fa-magic me-2"></i>Fill Example';
+    testButton.onclick = fillExample;
+    form.insertBefore(testButton, form.firstChild);
+});
+</script>
+{% endblock %} 

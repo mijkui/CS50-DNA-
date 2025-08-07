@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+
+{% block title %}Database - DNA Analysis System{% endblock %}
+
+{% block content %}
+<div class="main-container">
+    <div class="row mb-4">
+        <div class="col-12">
+            <h2 class="mb-3">
+                <i class="fas fa-database me-2"></i>DNA Database
+            </h2>
+            <p class="text-muted">View all DNA profiles in the database.</p>
+        </div>
+    </div>
+
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h5 class="card-title mb-0">
+                            <i class="fas fa-users me-2"></i>All Profiles ({{ records|length }})
+                        </h5>
+                        <a href="{{ url_for('add_person') }}" class="btn btn-success">
+                            <i class="fas fa-user-plus me-2"></i>Add New Person
+                        </a>
+                    </div>
+                    
+                    {% if records %}
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>AGATC</th>
+                                        <th>TTTTTTCT</th>
+                                        <th>AATG</th>
+                                        <th>TCTAG</th>
+                                        <th>GATA</th>
+                                        <th>TATC</th>
+                                        <th>GAAA</th>
+                                        <th>TCTG</th>
+                                        <th>Added</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for record in records %}
+                                    <tr>
+                                        <td><strong>{{ record.name }}</strong></td>
+                                        <td><span class="badge bg-primary">{{ record.agatc }}</span></td>
+                                        <td><span class="badge bg-primary">{{ record.ttttttct }}</span></td>
+                                        <td><span class="badge bg-primary">{{ record.aatg }}</span></td>
+                                        <td><span class="badge bg-primary">{{ record.tctag }}</span></td>
+                                        <td><span class="badge bg-primary">{{ record.gata }}</span></td>
+                                        <td><span class="badge bg-primary">{{ record.tatc }}</span></td>
+                                        <td><span class="badge bg-primary">{{ record.gaaa }}</span></td>
+                                        <td><span class="badge bg-primary">{{ record.tctg }}</span></td>
+                                        <td>{{ record.created_at.strftime('%Y-%m-%d') }}</td>
+                                        <td>
+                                            <button class="btn btn-sm btn-outline-primary" onclick="viewProfile('{{ record.name }}')">
+                                                <i class="fas fa-eye"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    {% else %}
+                        <div class="text-center py-4">
+                            <i class="fas fa-database fa-3x text-muted mb-3"></i>
+                            <h5>No profiles found</h5>
+                            <p class="text-muted">The database is empty. Add the first profile!</p>
+                            <a href="{{ url_for('add_person') }}" class="btn btn-primary">
+                                <i class="fas fa-user-plus me-2"></i>Add First Profile
+                            </a>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function viewProfile(name) {
+    alert('View profile for ' + name + ' - Feature coming soon!');
+}
+</script>
+{% endblock %} 
